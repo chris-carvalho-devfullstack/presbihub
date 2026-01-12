@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "mkdir -p .vercel/output/static && echo _worker.js > .vercel/output/static/.assetsignore",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages"
+    "pages:build": "npx @cloudflare/next-on-pages@1"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",
