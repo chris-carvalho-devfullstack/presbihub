@@ -1,0 +1,8 @@
+{
+  "name": "presbihub",
+  "compatibility_date": "2026-01-09",
+  "main": ".vercel/output/static/_worker.js/index.js",
+  "assets": {
+    "directory": ".vercel/output/static"
+  }
+}
