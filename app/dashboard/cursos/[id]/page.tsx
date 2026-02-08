@@ -1,10 +1,9 @@
-import SalaDeAulaContent from "./content"; // Importa o componente que criamos acima
+import SalaDeAulaContent from "./content";
 
-// Esta configuração fica ISOLADA aqui no Server Component
+// MANTENHA ISTO (Define que essa rota roda no Edge para satisfazer o Build)
 export const runtime = "edge";
 
-// Como não estamos usando o ID para buscar dados reais ainda, isso deixa a página
-// renderizar sem reclamar de falta de params.
 export default function Page() {
+  // Chama o componente cliente que contém toda a lógica
   return <SalaDeAulaContent />;
 }
