@@ -1,9 +1,13 @@
 import SalaDeAulaContent from "./content";
 
-// MANTENHA ISTO (Define que essa rota roda no Edge para satisfazer o Build)
+// Define que roda no Edge (Cloudflare gosta disso)
 export const runtime = "edge";
 
+// REMOVA a função generateStaticParams. 
+// Não queremos limitar os cursos apenas aos que existem no build.
+
 export default function Page() {
-  // Chama o componente cliente que contém toda a lógica
+  // Observe: Não recebemos 'params' aqui. 
+  // Deixamos o componente Cliente descobrir o ID sozinho.
   return <SalaDeAulaContent />;
 }

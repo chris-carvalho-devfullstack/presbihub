@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -13,18 +14,36 @@ import Link from "next/link";
 import { cn } from "@/lib/utils"; 
 
 export default function SalaDeAulaContent() {
-  // 1. DADOS DO CURSO
+  // 1. CAPTURA O ID DA URL
+  const params = useParams();
+  const cursoId = params?.id; 
+
+  // Estado de carregamento simulado
+  const [isLoading, setIsLoading] = useState(true);
+
+  // DADOS DO CURSO (Estado inicial)
   const [lessons, setLessons] = useState([
     { id: 1, title: "Introdução Histórica", duration: "10:00", completed: true, locked: false },
     { id: 2, title: "Sola Scriptura: A Base", duration: "15:30", completed: true, locked: false },
     { id: 3, title: "Sola Gratia: O Favor Imerecido", duration: "12:00", completed: true, locked: false },
-    { id: 4, title: "Sola Fide: Justificados pela Fé", duration: "14:00", completed: false, locked: false }, // Aula Atual
+    { id: 4, title: "Sola Fide: Justificados pela Fé", duration: "14:00", completed: false, locked: false },
     { id: 5, title: "Solus Christus: O Único Mediador", duration: "18:00", completed: false, locked: true },
     { id: 6, title: "Soli Deo Gloria: O Fim de Tudo", duration: "20:00", completed: false, locked: true },
   ]);
 
+  // Simula busca de dados quando o ID muda
+  useEffect(() => {
+    if (cursoId) {
+      // Simula um delay de rede (fetch)
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 600); // 600ms de esqueleto
+      return () => clearTimeout(timer);
+    }
+  }, [cursoId]);
+
   // Controles de Navegação
-  const [activeLessonIndex, setActiveLessonIndex] = useState(3); // Começa na aula 4
+  const [activeLessonIndex, setActiveLessonIndex] = useState(3); 
   const [isQuizMode, setIsQuizMode] = useState(false);
   const [quizScore, setQuizScore] = useState<number | null>(null);
 
@@ -52,11 +71,8 @@ export default function SalaDeAulaContent() {
 
   const handleFinishLesson = () => {
     const updatedLessons = [...lessons];
-    
-    // 1. Marca a aula atual como completa
     updatedLessons[activeLessonIndex].completed = true;
 
-    // 2. Verifica se existe próxima aula
     if (activeLessonIndex < lessons.length - 1) {
        updatedLessons[activeLessonIndex + 1].locked = false;
        setLessons(updatedLessons);
@@ -80,8 +96,42 @@ export default function SalaDeAulaContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // --- RENDERIZAÇÃO DE CARREGAMENTO (SKELETON) ---
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-pulse">
+        {/* Header Skeleton */}
+        <div className="flex items-center gap-4 text-sm">
+           <div className="h-4 w-24 bg-gray-200 rounded"></div>
+           <div className="h-4 w-40 bg-gray-200 rounded"></div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           {/* Vídeo Skeleton */}
+           <div className="lg:col-span-2 space-y-6">
+              <div className="aspect-video bg-gray-200 rounded-xl"></div>
+              <div className="flex justify-between mt-4">
+                 <div className="space-y-2">
+                    <div className="h-8 w-48 bg-gray-200 rounded"></div>
+                    <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                 </div>
+                 <div className="h-10 w-32 bg-gray-200 rounded"></div>
+              </div>
+           </div>
+
+           {/* Sidebar Skeleton */}
+           <div className="space-y-6">
+              <div className="h-64 bg-gray-200 rounded-xl"></div>
+              <div className="h-24 bg-gray-200 rounded-xl"></div>
+           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- RENDERIZAÇÃO DO CONTEÚDO REAL ---
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in duration-500">
       
       {/* HEADER DE NAVEGAÇÃO */}
       <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -89,7 +139,7 @@ export default function SalaDeAulaContent() {
           <ChevronLeft className="h-4 w-4" /> Voltar aos Cursos
         </Link>
         <span>/</span>
-        <span className="text-gray-900 font-medium">Teologia da Reforma</span>
+        <span className="text-gray-900 font-medium">Teologia da Reforma (ID: {cursoId})</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -99,7 +149,7 @@ export default function SalaDeAulaContent() {
           
           {!isQuizMode ? (
             // MODO VÍDEO
-            <div className="space-y-4 animate-in fade-in duration-500">
+            <div className="space-y-4">
                <div className="aspect-video bg-black rounded-xl overflow-hidden relative shadow-lg">
                   <iframe 
                     width="100%" height="100%" 
