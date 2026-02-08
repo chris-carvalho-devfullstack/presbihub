@@ -24,6 +24,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // ADICIONE ESTE LOG
+  console.log(">>> [DEBUG] Iniciando renderização: DashboardLayout");
   return (
     <div className="min-h-screen bg-gray-50 flex">
       
