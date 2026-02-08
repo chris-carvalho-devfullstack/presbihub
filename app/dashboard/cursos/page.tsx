@@ -1,5 +1,7 @@
 "use client"
 
+export const runtime = "edge";
+
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
