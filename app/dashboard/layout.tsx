@@ -5,9 +5,13 @@ import {
   Calendar, 
   CreditCard, 
   FileText, 
-  Settings, 
   LogOut,
-  Menu
+  Menu,
+  BookOpen,       // Devocional
+  HeartHandshake, // Oração
+  Baby,           // Família
+  MapPin,         // Grupos
+  GraduationCap   // [NOVO] Academy
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -31,7 +35,24 @@ export default function DashboardLayout({
 
         {/* Menu de Navegação */}
         <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
-          <SidebarItem href="/dashboard" icon={<Home size={20} />} label="Início" active />
+          <SidebarItem href="/dashboard" icon={<Home size={20} />} label="Início" />
+          
+          {/* SEÇÃO VIDA CRISTÃ */}
+          <div className="pt-2 pb-1">
+            <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Vida Cristã</p>
+          </div>
+          
+          <SidebarItem href="/dashboard/devocional" icon={<BookOpen size={20} />} label="Devocional Diário" />
+          <SidebarItem href="/dashboard/oracao" icon={<HeartHandshake size={20} />} label="Pedidos de Oração" />
+          <SidebarItem href="/dashboard/familia" icon={<Baby size={20} />} label="Minha Família" />
+          <SidebarItem href="/dashboard/grupos" icon={<MapPin size={20} />} label="Pequenos Grupos" />
+          <SidebarItem href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="PresbiAcademy" /> {/* NOVO ITEM */}
+          
+          {/* SEÇÃO SECRETARIA */}
+          <div className="pt-4 pb-1">
+            <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Secretaria</p>
+          </div>
+
           <SidebarItem href="/dashboard/perfil" icon={<Users size={20} />} label="Meu Perfil" />
           <SidebarItem href="/dashboard/escalas" icon={<Calendar size={20} />} label="Minhas Escalas" />
           <SidebarItem href="/dashboard/dizimos" icon={<CreditCard size={20} />} label="Dízimos e Ofertas" />
@@ -78,8 +99,22 @@ export default function DashboardLayout({
                 </div>
                 <nav className="flex-1 py-6 px-3 space-y-2">
                   <SidebarItem href="/dashboard" icon={<Home size={20} />} label="Início" />
+                  
+                  <div className="pt-2 pb-1 px-3">
+                    <p className="text-xs font-semibold text-gray-400 uppercase">Vida Cristã</p>
+                  </div>
+                  <SidebarItem href="/dashboard/devocional" icon={<BookOpen size={20} />} label="Devocional" />
+                  <SidebarItem href="/dashboard/oracao" icon={<HeartHandshake size={20} />} label="Orações" />
+                  <SidebarItem href="/dashboard/familia" icon={<Baby size={20} />} label="Família & Kids" />
+                  <SidebarItem href="/dashboard/grupos" icon={<MapPin size={20} />} label="Pequenos Grupos" />
+                  <SidebarItem href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="Academy" /> {/* NOVO ITEM MOBILE */}
+                  
+                  <div className="pt-4 pb-1 px-3">
+                     <p className="text-xs font-semibold text-gray-400 uppercase">Secretaria</p>
+                  </div>
                   <SidebarItem href="/dashboard/escalas" icon={<Calendar size={20} />} label="Escalas" />
                   <SidebarItem href="/dashboard/dizimos" icon={<CreditCard size={20} />} label="Contribuições" />
+                  <SidebarItem href="/dashboard/perfil" icon={<Users size={20} />} label="Perfil" />
                 </nav>
               </div>
             </SheetContent>
