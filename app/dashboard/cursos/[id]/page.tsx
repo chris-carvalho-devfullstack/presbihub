@@ -1,21 +1,25 @@
-import SalaDeAulaContent from "./content";
+import dynamic from "next/dynamic";
 
-// Mantemos as configs necessárias para o Cloudflare
+// Mantemos as configurações vitais para o Cloudflare
 export const runtime = "edge";
-export const dynamic = "force-dynamic";
+export const dynamicParams = true; // Garante que aceite qualquer ID
 
-// CORREÇÃO PARA NEXT.JS 14:
-// 1. Removemos o 'async' da função (não é necessário para ler params na v14).
-// 2. 'params' é um objeto direto, NÃO uma Promise.
-export default function Page({
-  params,
-}: {
-  params: { id: string };
-}) {
-  console.log("DEBUG [SERVER]: Iniciando /cursos/[id]...");
-  
-  // No Next 14, acessamos o ID diretamente, sem await
-  console.log("DEBUG [SERVER]: ID da rota:", params.id);
+// Importação Dinâmica com SSR Desativado
+// O servidor manda um HTML vazio e o navegador monta a tela depois.
+const SalaDeAulaContent = dynamic(
+  () => import("./content"),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex h-screen items-center justify-center text-gray-400">
+        Carregando sala de aula...
+      </div>
+    )
+  }
+);
 
+// Truque de Mestre: Não recebemos 'params' aqui.
+// Assim, evitamos que o Edge Runtime tente ler parâmetros e quebre (Erro 500).
+export default function Page() {
   return <SalaDeAulaContent />;
 }
