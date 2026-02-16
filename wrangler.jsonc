@@ -1,8 +1,11 @@
 {
   "name": "presbihub",
-  "compatibility_date": "2024-04-05", 
+  "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
+  // Aponte para o arquivo _worker.js gerado pelo build
+  "main": ".vercel/output/static/_worker.js",
   "assets": {
-    "directory": ".vercel/output/static"
+    "directory": ".vercel/output/static",
+    "binding": "ASSETS"
   }
 }
