@@ -1,5 +1,7 @@
 import SalaDeAulaContent from "./content";
 
+export const runtime = "edge";
+
 // 1. Configurações para garantir que o Cloudflare entenda como rodar
 
 export const dynamic = "force-dynamic"; // OBRIGATÓRIO: Impede que tente criar HTML estático falho

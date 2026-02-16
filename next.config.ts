@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   // Esta configuração é crucial para o Next 15 no Cloudflare.
   // Ela impede que o compilador tente empacotar módulos que devem ser tratados
   // como externos no ambiente de borda (Edge/Workers).
-  //serverExternalPackages: ["@cloudflare/workers-types"],
+  
 
   // Garante que o build não falhe por erros de linting ou typescript 
   // que às vezes se comportam de forma diferente no ambiente de CI da Cloudflare
