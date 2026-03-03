@@ -10,22 +10,22 @@ import {
   FileText, 
   LogOut,
   Menu,
-  BookOpen,       // Devocional
-  HeartHandshake, // Oração
+  BookOpen,       // Devocional e Pastoral
+  HeartHandshake, // Oração e Diaconia
   Baby,           // Família
   MapPin,         // Grupos
-  GraduationCap   // [NOVO] Academy
+  GraduationCap,  // Academy
+  Shield          // [NOVO] Conselho
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // ADICIONE ESTE LOG
   console.log(">>> [DEBUG] Iniciando renderização: DashboardLayout");
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -51,7 +51,16 @@ export default function DashboardLayout({
           <SidebarItem href="/dashboard/oracao" icon={<HeartHandshake size={20} />} label="Pedidos de Oração" />
           <SidebarItem href="/dashboard/familia" icon={<Baby size={20} />} label="Minha Família" />
           <SidebarItem href="/dashboard/grupos" icon={<MapPin size={20} />} label="Pequenos Grupos" />
-          <SidebarItem href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="PresbiAcademy" /> {/* NOVO ITEM */}
+          <SidebarItem href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="PresbiAcademy" />
+          
+          {/* 👇 NOVA SEÇÃO: GESTÃO ECLESIÁSTICA 👇 */}
+          <div className="pt-4 pb-1">
+            <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Gestão Eclesiástica</p>
+          </div>
+
+          <SidebarItem href="/dashboard/oficiais/conselho" icon={<Shield size={20} />} label="Conselho" />
+          <SidebarItem href="/dashboard/oficiais/diaconia" icon={<HeartHandshake size={20} />} label="Junta Diaconal" />
+          <SidebarItem href="/dashboard/oficiais/pastoral" icon={<BookOpen size={20} />} label="Gabinete Pastoral" />
           
           {/* SEÇÃO SECRETARIA */}
           <div className="pt-4 pb-1">
@@ -98,28 +107,36 @@ export default function DashboardLayout({
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0">
-              <div className="h-full flex flex-col bg-white">
-                <div className="h-16 flex items-center px-6 border-b">
+              <div className="h-full flex flex-col bg-white overflow-y-auto">
+                <div className="h-16 flex items-center px-6 border-b shrink-0">
                    <span className="text-ippc-bordo font-bold">Menu IPPC</span>
                 </div>
                 <nav className="flex-1 py-6 px-3 space-y-2">
-                  <SidebarItem href="/dashboard" icon={<Home size={20} />} label="Início" />
+                  <SidebarItemMobile href="/dashboard" icon={<Home size={20} />} label="Início" />
                   
                   <div className="pt-2 pb-1 px-3">
                     <p className="text-xs font-semibold text-gray-400 uppercase">Vida Cristã</p>
                   </div>
-                  <SidebarItem href="/dashboard/devocional" icon={<BookOpen size={20} />} label="Devocional" />
-                  <SidebarItem href="/dashboard/oracao" icon={<HeartHandshake size={20} />} label="Orações" />
-                  <SidebarItem href="/dashboard/familia" icon={<Baby size={20} />} label="Família & Kids" />
-                  <SidebarItem href="/dashboard/grupos" icon={<MapPin size={20} />} label="Pequenos Grupos" />
-                  <SidebarItem href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="Academy" /> {/* NOVO ITEM MOBILE */}
+                  <SidebarItemMobile href="/dashboard/devocional" icon={<BookOpen size={20} />} label="Devocional" />
+                  <SidebarItemMobile href="/dashboard/oracao" icon={<HeartHandshake size={20} />} label="Orações" />
+                  <SidebarItemMobile href="/dashboard/familia" icon={<Baby size={20} />} label="Família & Kids" />
+                  <SidebarItemMobile href="/dashboard/grupos" icon={<MapPin size={20} />} label="Pequenos Grupos" />
+                  <SidebarItemMobile href="/dashboard/cursos" icon={<GraduationCap size={20} />} label="Academy" />
                   
+                  {/* 👇 NOVA SEÇÃO: GESTÃO ECLESIÁSTICA (MOBILE) 👇 */}
+                  <div className="pt-4 pb-1 px-3">
+                    <p className="text-xs font-semibold text-gray-400 uppercase">Gestão Eclesiástica</p>
+                  </div>
+                  <SidebarItemMobile href="/dashboard/oficiais/conselho" icon={<Shield size={20} />} label="Conselho" />
+                  <SidebarItemMobile href="/dashboard/oficiais/diaconia" icon={<HeartHandshake size={20} />} label="Junta Diaconal" />
+                  <SidebarItemMobile href="/dashboard/oficiais/pastoral" icon={<BookOpen size={20} />} label="Pastoral" />
+
                   <div className="pt-4 pb-1 px-3">
                      <p className="text-xs font-semibold text-gray-400 uppercase">Secretaria</p>
                   </div>
-                  <SidebarItem href="/dashboard/escalas" icon={<Calendar size={20} />} label="Escalas" />
-                  <SidebarItem href="/dashboard/dizimos" icon={<CreditCard size={20} />} label="Contribuições" />
-                  <SidebarItem href="/dashboard/perfil" icon={<Users size={20} />} label="Perfil" />
+                  <SidebarItemMobile href="/dashboard/escalas" icon={<Calendar size={20} />} label="Escalas" />
+                  <SidebarItemMobile href="/dashboard/dizimos" icon={<CreditCard size={20} />} label="Contribuições" />
+                  <SidebarItemMobile href="/dashboard/perfil" icon={<Users size={20} />} label="Perfil" />
                 </nav>
               </div>
             </SheetContent>
@@ -136,7 +153,7 @@ export default function DashboardLayout({
   );
 }
 
-// Componente auxiliar do item de menu
+// Componente auxiliar do item de menu para Desktop
 function SidebarItem({ icon, label, href, active = false }: { icon: any, label: string, href: string, active?: boolean }) {
   return (
     <Link href={href}>
@@ -150,5 +167,24 @@ function SidebarItem({ icon, label, href, active = false }: { icon: any, label: 
         {label}
       </div>
     </Link>
+  )
+}
+
+// Componente auxiliar do item de menu para Mobile (Fecha o menu ao clicar)
+function SidebarItemMobile({ icon, label, href, active = false }: { icon: any, label: string, href: string, active?: boolean }) {
+  return (
+    <SheetClose asChild>
+      <Link href={href}>
+        <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-sm font-medium
+          ${active 
+            ? "bg-red-50 text-ippc-bordo" 
+            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+          }`}
+        >
+          {icon}
+          {label}
+        </div>
+      </Link>
+    </SheetClose>
   )
 }
