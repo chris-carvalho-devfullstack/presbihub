@@ -38,8 +38,8 @@ export default function GeradorAtaPage() {
   const [textoAtaGerado, setTextoAtaGerado] = useState("");
   const [copiado, setCopiado] = useState(false);
 
-  // Manipuladores de estado
-  const handleDadosChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  // Manipuladores de estado (Corrigido com HTMLTextAreaElement)
+  const handleDadosChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setDadosReuniao((prev) => ({ ...prev, [name]: value }));
   };
